@@ -8,40 +8,26 @@ import java.util.Iterator;
  */
 class Troco {
 
-    protected PapelMoeda[] papeisMoeda;
+    private ArrayList<PapelMoeda> papeisMoeda;
 
     public Troco(int valor) {
-        papeisMoeda = new PapelMoeda[6];
-        int count = 0;
-        while (valor % 100 != 0) {
-            count++;
-        }
-        papeisMoeda[5] = new PapelMoeda(100, count);
-        count = 0;
-        while (valor % 50 != 0) {
-            count++;
-        }
-        papeisMoeda[4] = new PapelMoeda(50, count);
-        count = 0;
-        while (valor % 20 != 0) {
-            count++;
-        }
-        papeisMoeda[3] = new PapelMoeda(20, count);
-        count = 0;
-        while (valor % 10 != 0) {
-            count++;
-        }
-        papeisMoeda[2] = new PapelMoeda(10, count);
-        count = 0;
-        while (valor % 5 != 0) {
-            count++;
-        }
-        papeisMoeda[1] = new PapelMoeda(5, count);
-        count = 0;
-        while (valor % 2 != 0) {
-            count++;
-        }
-        papeisMoeda[1] = new PapelMoeda(2, count);
+        this.papeisMoeda = calculaTroco(valor);
+    }
+    
+    private static ArrayList<PapelMoeda> calculaTroco(int valor) {
+        int[] valoresNotas = {100, 50, 20, 10, 5, 2, 1};
+        ArrayList<PapelMoeda> notas = new ArrayList();
+        int i, ct;
+        i = 0;
+        while (valor != 0) {
+            ct = valor / valoresNotas[i];
+            if (ct != 0) {
+                notas.add(new PapelMoeda(valoresNotas[i],ct));
+                valor = valor % valoresNotas[i];
+            }
+            i = i + 1;
+        }      
+        return notas;
     }
 
     public Iterator<PapelMoeda> getIterator() {
@@ -49,38 +35,26 @@ class Troco {
     }
 
     class TrocoIterator implements Iterator<PapelMoeda> {
+        private int index;
 
-        protected Troco troco;
-
-        public TrocoIterator(Troco troco) {
-            this.troco = troco;
+        public TrocoIterator() {
+            index = 0;
         }
 
         @Override
         public boolean hasNext() {
-            for (int i = 6; i >= 0; i++) {
-                if (troco.papeisMoeda[i] != null) {
-                    return true;
-                }
-            }
-            return false;
+            return index < papeisMoeda.size();
         }
 
         @Override
         public PapelMoeda next() {
-            PapelMoeda ret = null;
-            for (int i = 6; i >= 0 && ret != null; i++) {
-                if (troco.papeisMoeda[i] != null) {
-                    ret = troco.papeisMoeda[i];
-                    troco.papeisMoeda[i] = null;
-                }
-            }
-            return ret;
+            if(!hasNext()) throw new NoSuchElementException();
+            return papeisMoeda.get(index++);
         }
 
         @Override
         public void remove() {
-            next();
+            papeisMoeda.remove(index);
         }
     }
 }
