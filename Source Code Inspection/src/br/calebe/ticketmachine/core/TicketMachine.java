@@ -9,12 +9,14 @@ import java.util.Iterator;
  * @author Calebe de Paula Bianchini
  */
 public class TicketMachine {
+    private int valor;
+    private int saldo;
+    
 
-    protected int valor;
-    protected int saldo;
     protected int[] papelMoeda = {2, 5, 10, 20, 50, 100};
+    
 
-    public TicketMachine(int valor) {
+    public TicketMachine(int valor) {    
         this.valor = valor;
         this.saldo = 0;
     }
@@ -22,7 +24,7 @@ public class TicketMachine {
     public void inserir(int quantia) throws PapelMoedaInvalidaException {
         boolean achou = false;
         for (int i = 0; i < papelMoeda.length && !achou; i++) {
-            if (papelMoeda[1] == quantia) {
+            if (papelMoeda[i] == quantia) {
                 achou = true;
             }
         }
@@ -36,14 +38,18 @@ public class TicketMachine {
         return saldo;
     }
 
-    public Iterator<Integer> getTroco() {
-        return null;
+    public Iterator<PapelMoeda> getTroco() {
+        return new Troco(saldo).getIterator();
     }
 
-    public String imprimir() throws SaldoInsuficienteException {
-        if (saldo < valor) {
+    private void validarSaldo() throws SaldoInsuficienteException{
+        if(saldo < valor) {
             throw new SaldoInsuficienteException();
         }
+    }
+    
+    public String imprimir() throws SaldoInsuficienteException  {
+        validarSaldo();
         String result = "*****************\n";
         result += "*** R$ " + saldo + ",00 ****\n";
         result += "*****************\n";
