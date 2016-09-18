@@ -1,6 +1,8 @@
 package br.calebe.ticketmachine.core;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  *
