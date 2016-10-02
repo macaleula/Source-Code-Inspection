@@ -19,9 +19,7 @@ import static org.junit.Assert.*;
  * @author ECL-0186
  */
 public class TrocoTest {
-    
-    public TrocoTest() {
-    }
+
     @Test
     public void testaTroco() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Troco troco = new Troco(39);
