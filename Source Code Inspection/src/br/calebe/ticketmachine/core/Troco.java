@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  *
  * @author Calebe de Paula Bianchini
  */
-class Troco {
+public class Troco {
 
     private ArrayList<PapelMoeda> papeisMoeda;
 
@@ -56,7 +56,8 @@ class Troco {
 
         @Override
         public void remove() {
-            papeisMoeda.remove(index);
+            if(hasNext()) papeisMoeda.remove(index);
+            else papeisMoeda.remove(--index);
         }
     }
 }
