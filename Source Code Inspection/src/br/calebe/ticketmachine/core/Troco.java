@@ -33,7 +33,7 @@ class Troco {
     }
 
     public Iterator<PapelMoeda> getIterator() {
-        return new TrocoIterator(this);
+        return new TrocoIterator();
     }
 
     class TrocoIterator implements Iterator<PapelMoeda> {
