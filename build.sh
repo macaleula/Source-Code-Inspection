@@ -1,9 +1,6 @@
 #!/bin/bash
 
-_PWD=`pwd`
-CopyLibs=$_PWD/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar
-
-CLASSPATH=$CLASSPATH:$CopyLibs:
+CLASSPATH=$(JARS=("$LIB"/*.jar); IFS=:; echo "${JARS[*]}")
 export CLASSPATH
 echo "CLASSPATH:"$CLASSPATH
 
